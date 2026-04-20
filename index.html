@@ -69,6 +69,9 @@
             font-size: 0.9rem;
             margin-top: 2rem;
         }
+        .success {
+            color: #7ee787;
+        }
     </style>
 </head>
 <body>
@@ -86,10 +89,10 @@
         <span>Linux 6.6.16 LTS (x86_64) · Compiled manually from source</span>
         
         <span class="label">Current milestone</span>
-        <span>Building the heart: Kernel image (bzImage) ready. Bootstrapping environment (initramfs) not yet executed.</span>
+        <span class="success">✅ Kernel 6.6.16 booted successfully in QEMU with custom initramfs. First shell prompt achieved.</span>
         
         <span class="label">Toolchain</span>
-        <span>GNU make, GCC, binutils, BusyBox (planned)</span>
+        <span>GNU make, GCC, binutils, BusyBox (static)</span>
         
         <span class="label">License</span>
         <span>GPL v3</span>
@@ -98,32 +101,35 @@
     <h2>📁 Project Status</h2>
     <pre><code>journey-os/
 ├── kernel/
-│   └── linux-6.6.16/          # Source tree
-│       └── arch/x86/boot/bzImage   # ✅ Compiled (not booted)
-├── initramfs/                 # ❌ To be built
-├── qemu/                      # ❌ Not yet configured
+│   └── linux-6.6.16/           # Source tree
+│       └── arch/x86/boot/bzImage   # ✅ Compiled & booted
+├── initramfs/                  # ✅ Minimal rootfs (BusyBox)
+│   ├── init                    # Startup script
+│   └── cpio archive            # initramfs.cpio
+├── qemu/                       # ✅ Boot tested (noapic)
 └── docs/
-    └── ui-concept/            # 📝 Conceptual design only</code></pre>
+    └── ui-concept/             # 📝 Conceptual design only</code></pre>
 
     <h2>🔧 What Works (So Far)</h2>
     <ul>
         <li>Linux kernel <code>6.6.16</code> configured with <code>x86_64_defconfig</code></li>
         <li>Successful compilation on Ubuntu 24.04 LTS inside VirtualBox VM</li>
-        <li>Generated <code>bzImage</code> (approx 12 MB)</li>
+        <li>Custom <code>initramfs</code> with static BusyBox</li>
+        <li>Boots to a functional shell (<code>~ #</code>) under QEMU</li>
     </ul>
 
     <h2>🚧 Immediate Next Steps</h2>
     <ol>
-        <li>Create a minimal <code>initramfs</code> using BusyBox</li>
-        <li>Boot the kernel with <code>qemu-system-x86_64</code></li>
-        <li>Reach first milestone: <code>"Journey OS - Hello, world."</code> on screen</li>
+        <li>Integrate a minimal graphical stack (Wayland / Weston)</li>
+        <li>Display a blank screen with a cursor (first graphical milestone)</li>
+        <li>Implement the Journey UI concept (taskbar + mountain wallpaper)</li>
     </ol>
 
     <h2>📡 Public Presence</h2>
     <p>
         This page serves as the official project log. <br>
-        <strong>GitHub:</strong> <a href="#">github.com/lucasprado/journey-os</a><br>
-        <strong>Forum thread:</strong> <a href="#">mstdn</a>
+        <strong>GitHub:</strong> <a href="#">github.com/prilugano992-cmyk/Journey-OS</a> (repository) <br>
+        <strong>Status page:</strong> <a href="https://prilugano992-cmyk.github.io/Journey-OS/">https://prilugano992-cmyk.github.io/Journey-OS/</a>
     </p>
 
     <hr>
