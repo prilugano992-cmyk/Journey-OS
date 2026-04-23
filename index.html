@@ -89,10 +89,10 @@
         <span>Linux 6.6.16 LTS (x86_64) · Compiled manually from source</span>
         
         <span class="label">Current milestone</span>
-        <span class="success">✅ Kernel 6.6.16 booted successfully in QEMU with custom initramfs. First shell prompt achieved.</span>
+        <span class="success">✅ Graphical milestone: DRM/KMS pipeline validated (kmscube running). Foot terminal running inside Weston (proof of concept).</span>
         
         <span class="label">Toolchain</span>
-        <span>GNU make, GCC, binutils, BusyBox (static)</span>
+        <span>GNU make, GCC, binutils, BusyBox (static), Wayland/Weston, Cage, Foot</span>
         
         <span class="label">License</span>
         <span>GPL v3</span>
@@ -105,10 +105,16 @@
 │       └── arch/x86/boot/bzImage   # ✅ Compiled & booted
 ├── initramfs/                  # ✅ Minimal rootfs (BusyBox)
 │   ├── init                    # Startup script
-│   └── cpio archive            # initramfs.cpio
+│   └── stable-initramfs.cpio   # ✅ Boots to shell
+├── graphic-cage/               # 🚧 Cage + Foot initramfs
+│   ├── bin/                    # Binaries (cage, foot)
+│   ├── usr/lib/                # Libraries (wlroots, wayland, etc.)
+│   └── cage.cpio               # 🚧 Initramfs image (QEMU issues)
 ├── qemu/                       # ✅ Boot tested (noapic)
-└── docs/
-    └── ui-concept/             # 📝 Conceptual design only</code></pre>
+├── docs/
+│   └── ui-concept/             # 📝 Conceptual design only
+└── site/
+    └── index.html              # ✅ Project status page (this file)</code></pre>
 
     <h2>🔧 What Works (So Far)</h2>
     <ul>
@@ -116,16 +122,25 @@
         <li>Successful compilation on Ubuntu 24.04 LTS inside VirtualBox VM</li>
         <li>Custom <code>initramfs</code> with static BusyBox</li>
         <li>Boots to a functional shell (<code>~ #</code>) under QEMU</li>
+        <li>DRM/KMS pipeline validated with <code>kmscube</code></li>
+        <li>Foot terminal emulator running inside Weston (X11 backend) as graphical proof of concept</li>
+        <li>Cage compositor + Foot successfully packaged into initramfs</li>
     </ul>
 
-    <h2>🚧 Immediate Next Steps</h2>
+    <h2>🚧 Known Issues / Under Investigation</h2>
+    <ul>
+        <li>QEMU freezes when launching a Wayland compositor (Cage or Weston) inside the VM; the GPU emulation layer appears unstable</li>
+        <li>Initramfs with Cage reports <code>Found 0 GPUs</code> even when DRM is available; likely a QEMU-specific quirk</li>
+    </ul>
+
+    <h2>🚀 Immediate Next Steps</h2>
     <ol>
-        <li>Integrate a minimal graphical stack (Wayland / Weston)</li>
-        <li>Display a blank screen with a cursor (first graphical milestone)</li>
-        <li>Implement the Journey UI concept (taskbar + mountain wallpaper)</li>
+        <li>Resolve QEMU/DRM freeze — explore alternative emulators or bypass QEMU for GUI development</li>
+        <li>Complete the GTK-based Journey UI shell (taskbar, wallpaper, launcher)</li>
+        <li>Port the system to a physical device (Raspberry Pi) to validate real hardware performance</li>
     </ol>
 
-        <h2>📡 Public Presence</h2>
+    <h2>📡 Public Presence</h2>
     <p>
         This page serves as the official project log. <br>
         <strong>GitHub Repository:</strong> <a href="https://github.com/prilugano992-cmyk/Journey-OS">github.com/prilugano992-cmyk/Journey-OS</a> <br>
