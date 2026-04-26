@@ -46,17 +46,18 @@
             margin-bottom: 1.5rem;
             border-bottom: 1px solid var(--border);
             padding-bottom: 0.5rem;
+            flex-wrap: wrap;
         }
         .tab {
             background: transparent;
             color: #8b949e;
             border: 1px solid var(--border);
             border-bottom: none;
-            padding: 0.6rem 1.5rem;
+            padding: 0.6rem 1.2rem;
             border-radius: 6px 6px 0 0;
             cursor: pointer;
             font-family: inherit;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             transition: 0.2s;
         }
         .tab.active { background: var(--card); color: var(--text); border-color: var(--border); }
@@ -82,11 +83,12 @@
             padding: 1rem;
             overflow-x: auto;
             max-height: 500px;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             line-height: 1.4;
         }
         code { color: var(--purple); }
         .license { color: #8b949e; font-size: 0.85rem; margin-top: 0.5rem; }
+        .ps-badge { background: #012456; color: #ffffff; padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.8rem; }
 
         .footer {
             text-align: center;
@@ -107,11 +109,12 @@
 
     <header>
         <h1>Lucas Prado Coelho</h1>
-        <p>Building operating systems and alternative interfaces.</p>
+        <p>Building operating systems, alternative interfaces, and tiny tools.</p>
         <div class="links">
             <a href="https://github.com/prilugano992-cmyk">GitHub</a>
             <a href="#journey">Journey OS</a>
             <a href="#bang">Bang Desktop</a>
+            <a href="#tiny">Really Small Projects</a>
         </div>
     </header>
 
@@ -119,6 +122,7 @@
     <div class="tabs">
         <button class="tab active" onclick="openProject('journey')">Journey OS</button>
         <button class="tab" onclick="openProject('bang')">Bang Desktop</button>
+        <button class="tab" onclick="openProject('tiny')">Really Small Projects</button>
     </div>
 
     <!-- ==================== JOURNEY OS ==================== -->
@@ -471,8 +475,68 @@ int main() {
         </div>
     </div>
 
+    <!-- ==================== REALLY SMALL PROJECTS ==================== -->
+    <div id="tiny" class="project-panel">
+        <div class="card">
+            <h2>Really Small Projects <span class="badge" style="background:#c9510c;">Micro</span></h2>
+            <p>A collection of tiny, self‑contained tools born from curiosity. Each fulfills a single purpose with minimal code.</p>
+        </div>
+
+        <div class="card">
+            <h3>WikiSearch <span class="ps-badge">PowerShell</span></h3>
+            <p>A terminal‑based Wikipedia browser. Type a term and get the article summary instantly. If the exact term isn't found, it searches for the closest match using Wikipedia's API.</p>
+            <p style="margin-top:0.5rem; font-size:0.9rem; color:#8b949e;">Runs on any Windows machine with PowerShell — no extra installation required.</p>
+            <pre><code>while ($true) {
+    $query = Read-Host "Search For a Term (or 'Exit')"
+    if ($query -eq "exit") { break }
+
+    Write-Host "`nSearching For '$query'..." -ForegroundColor Cyan
+
+    try {
+        $encodedQuery = [uri]::EscapeDataString($query)
+        # Uses REST API v1 to get the main page summary
+        $url = "https://en.wikipedia.org/api/rest_v1/page/summary/$encodedQuery"
+        $response = Invoke-RestMethod -Uri $url -Method Get -ErrorAction Stop
+
+        Write-Host "`n===== RESULT =====" -ForegroundColor Green
+        Write-Host "`n--- $($response.title) ---" -ForegroundColor Yellow
+        Write-Host $response.extract
+        Write-Host "`n====================="
+    }
+    catch {
+        # If it fails (e.g., page not found), try opensearch and pick the first result
+        try {
+            $urlSearch = "https://en.wikipedia.org/w/api.php?action=opensearch&amp;format=json&amp;search=$encodedQuery&amp;limit=1"
+            $searchResponse = Invoke-RestMethod -Uri $urlSearch -Method Get
+            $firstResult = $searchResponse[1][0]
+            if ($firstResult) {
+                $encodedFirst = [uri]::EscapeDataString($firstResult)
+                $urlSummary = "https://en.wikipedia.org/api/rest_v1/page/summary/$encodedFirst"
+                $summary = Invoke-RestMethod -Uri $urlSummary -Method Get -ErrorAction SilentlyContinue
+                if ($summary) {
+                    Write-Host "`nClosest Term: $firstResult" -ForegroundColor Magenta
+                    Write-Host "`n===== RESULT =====" -ForegroundColor Green
+                    Write-Host "`n--- $($summary.title) ---" -ForegroundColor Yellow
+                    Write-Host $summary.extract
+                    Write-Host "`n====================="
+                } else {
+                    Write-Host "Nothing Found." -ForegroundColor Red
+                }
+            } else {
+                Write-Host "Nothing Found." -ForegroundColor Red
+            }
+        }
+        catch {
+            Write-Host "Error to ask API: $_" -ForegroundColor Red
+        }
+    }
+}
+</code></pre>
+        </div>
+    </div>
+
     <div class="footer">
-        © 2026 Lucas Prado Coelho · Built with Linux, GNU toolchain and caffeine.
+        © 2026 Lucas Prado Coelho · Built with Linux, GNU toolchain, PowerShell and endless curiosity.
     </div>
 </div>
 
