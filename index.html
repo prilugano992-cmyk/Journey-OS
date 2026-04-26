@@ -3,157 +3,486 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Journey OS · Lucas Prado Coelho</title>
+    <title>Lucas Prado Coelho · Projetos</title>
     <style>
+        :root {
+            --bg: #0d1117;
+            --card: #161b22;
+            --border: #30363d;
+            --text: #e6edf3;
+            --accent: #58a6ff;
+            --green: #7ee787;
+            --purple: #d2a8ff;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            margin: 0;
-            padding: 2rem;
-            background: #0d1117;
-            color: #e6edf3;
-            font-family: 'SF Mono', 'Cascadia Code', 'Fira Code', monospace;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Segoe UI', 'SF Mono', 'Cascadia Code', monospace;
             line-height: 1.6;
+            padding: 2rem;
         }
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
+        .container { max-width: 1000px; margin: 0 auto; }
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
         }
-        h1 {
-            font-weight: 400;
-            border-bottom: 1px solid #30363d;
+        header h1 { font-weight: 300; font-size: 2.5rem; letter-spacing: 2px; }
+        header p { color: #8b949e; margin-top: 0.5rem; }
+        .links { margin-top: 1rem; }
+        .links a {
+            color: var(--accent);
+            text-decoration: none;
+            margin: 0 1rem;
+            font-weight: 500;
+        }
+        .links a:hover { text-decoration: underline; }
+
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
             padding-bottom: 0.5rem;
         }
-        .status-badge {
-            display: inline-block;
-            background: #238636;
-            color: white;
-            padding: 0.2rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            margin-left: 1rem;
-        }
-        pre {
-            background: #161b22;
-            padding: 1rem;
-            border-radius: 8px;
-            overflow-x: auto;
-            border: 1px solid #30363d;
-        }
-        code {
+        .tab {
+            background: transparent;
+            color: #8b949e;
+            border: 1px solid var(--border);
+            border-bottom: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 6px 6px 0 0;
+            cursor: pointer;
             font-family: inherit;
-            color: #d2a8ff;
+            font-size: 0.95rem;
+            transition: 0.2s;
         }
-        .info-grid {
-            display: grid;
-            grid-template-columns: auto 1fr;
-            gap: 0.5rem 1rem;
-            margin: 1.5rem 0;
+        .tab.active { background: var(--card); color: var(--text); border-color: var(--border); }
+        .tab:hover:not(.active) { color: var(--text); }
+
+        .project-panel { display: none; }
+        .project-panel.active { display: block; }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
         }
-        .label {
-            font-weight: 600;
-            color: #8b949e;
+        .card h2 { font-weight: 400; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.5rem; }
+        .badge { background: #238636; color: white; padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.8rem; }
+
+        pre {
+            background: #0d1117;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1rem;
+            overflow-x: auto;
+            max-height: 500px;
+            font-size: 0.8rem;
+            line-height: 1.4;
         }
-        a {
-            color: #58a6ff;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-        hr {
-            border: none;
-            border-top: 1px solid #30363d;
-            margin: 2rem 0;
-        }
+        code { color: var(--purple); }
+        .license { color: #8b949e; font-size: 0.85rem; margin-top: 0.5rem; }
+
         .footer {
-            color: #8b949e;
-            font-size: 0.9rem;
+            text-align: center;
             margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+            color: #8b949e;
+            font-size: 0.85rem;
         }
-        .success {
-            color: #7ee787;
+        @media (max-width: 600px) {
+            body { padding: 1rem; }
+            header h1 { font-size: 1.8rem; }
         }
     </style>
 </head>
 <body>
 <div class="container">
 
-    <h1>Journey OS <span class="status-badge">PRE-ALPHA</span></h1>
-    
-    <p style="font-size: 1.2rem;">A mobile operating system built from scratch. <br>Not a fork. Not a skin. A new core.</p>
+    <header>
+        <h1>Lucas Prado Coelho</h1>
+        <p>Construindo sistemas operacionais e interfaces alternativas.</p>
+        <div class="links">
+            <a href="https://github.com/prilugano992-cmyk">GitHub</a>
+            <a href="https://prilugano992-cmyk.github.io/Journey-OS/">Journey OS</a>
+            <a href="#bang">Bang Desktop</a>
+        </div>
+    </header>
 
-    <div class="info-grid">
-        <span class="label">Created by</span>
-        <span>Lucas Prado Coelho</span>
-        
-        <span class="label">Kernel</span>
-        <span>Linux 6.6.16 LTS (x86_64) · Compiled manually from source</span>
-        
-        <span class="label">Current milestone</span>
-        <span class="success">✅ Graphical milestone: DRM/KMS pipeline validated (kmscube running). Foot terminal running inside Weston (proof of concept).</span>
-        
-        <span class="label">Toolchain</span>
-        <span>GNU make, GCC, binutils, BusyBox (static), Wayland/Weston, Cage, Foot</span>
-        
-        <span class="label">License</span>
-        <span>GPL v3</span>
+    <!-- Tabs -->
+    <div class="tabs">
+        <button class="tab active" onclick="openProject('journey')">Journey OS</button>
+        <button class="tab" onclick="openProject('bang')">Bang Desktop</button>
     </div>
 
-    <h2>📁 Project Status</h2>
-    <pre><code>journey-os/
-├── kernel/
-│   └── linux-6.6.16/           # Source tree
-│       └── arch/x86/boot/bzImage   # ✅ Compiled & booted
-├── initramfs/                  # ✅ Minimal rootfs (BusyBox)
-│   ├── init                    # Startup script
-│   └── stable-initramfs.cpio   # ✅ Boots to shell
-├── graphic-cage/               # 🚧 Cage + Foot initramfs
-│   ├── bin/                    # Binaries (cage, foot)
-│   ├── usr/lib/                # Libraries (wlroots, wayland, etc.)
-│   └── cage.cpio               # 🚧 Initramfs image (QEMU issues)
-├── qemu/                       # ✅ Boot tested (noapic)
-├── docs/
-│   └── ui-concept/             # 📝 Conceptual design only
-└── site/
-    └── index.html              # ✅ Project status page (this file)</code></pre>
+    <!-- ==================== JOURNEY OS ==================== -->
+    <div id="journey" class="project-panel active">
+        <div class="card">
+            <h2>Journey OS <span class="badge">PRE-ALPHA</span></h2>
+            <p style="margin-bottom:1rem;">A mobile operating system built from scratch. Not a fork. Not a skin. A new core.</p>
+            <table style="width:100%; border-collapse: collapse;">
+                <tr><td style="color:#8b949e; padding:0.3rem 0;">Kernel</td><td>Linux 6.6.16 LTS (x86_64) · Compiled manually from source</td></tr>
+                <tr><td style="color:#8b949e;">Current milestone</td><td style="color:var(--green);">✅ Graphical milestone: DRM/KMS pipeline validated (kmscube running). Foot terminal running inside Weston.</td></tr>
+                <tr><td style="color:#8b949e;">Initramfs</td><td>✅ BusyBox static · Boots to shell</td></tr>
+                <tr><td style="color:#8b949e;">License</td><td>GPL v3</td></tr>
+            </table>
+        </div>
+        <div class="card">
+            <h3>Status</h3>
+            <p>O kernel compila e inicia no QEMU; a interface gráfica ainda está sendo integrada devido a limitações do QEMU com compositores Wayland. O desenvolvimento do Bang Desktop serve como laboratório para a futura UI do Journey OS.</p>
+            <p style="margin-top:1rem;">🔗 <a href="https://prilugano992-cmyk.github.io/Journey-OS/">Página de status do Journey OS</a></p>
+        </div>
+    </div>
 
-    <h2>🔧 What Works (So Far)</h2>
-    <ul>
-        <li>Linux kernel <code>6.6.16</code> configured with <code>x86_64_defconfig</code></li>
-        <li>Successful compilation on Ubuntu 24.04 LTS inside VirtualBox VM</li>
-        <li>Custom <code>initramfs</code> with static BusyBox</li>
-        <li>Boots to a functional shell (<code>~ #</code>) under QEMU</li>
-        <li>DRM/KMS pipeline validated with <code>kmscube</code></li>
-        <li>Foot terminal emulator running inside Weston (X11 backend) as graphical proof of concept</li>
-        <li>Cage compositor + Foot successfully packaged into initramfs</li>
-    </ul>
+    <!-- ==================== BANG DESKTOP ==================== -->
+    <div id="bang" class="project-panel">
+        <div class="card">
+            <h2>Bang Desktop <span class="badge" style="background:#9c6ade;">OPEN SOURCE</span></h2>
+            <p>Um ambiente visual de terminal escrito em C com ncurses. Combina janelas móveis, área de trabalho com ícones e edição de arquivos via <code>vi</code>/<code>nano</code>. É a prova de conceito da interface híbrida (terminal + GUI) idealizada para o Journey OS.</p>
+            <p style="margin-top:0.5rem; color:#8b949e;">Licença MIT · Totalmente open source para estudo, modificação e distribuição.</p>
+        </div>
 
-    <h2>🚧 Known Issues / Under Investigation</h2>
-    <ul>
-        <li>QEMU freezes when launching a Wayland compositor (Cage or Weston) inside the VM; the GPU emulation layer appears unstable</li>
-        <li>Initramfs with Cage reports <code>Found 0 GPUs</code> even when DRM is available; likely a QEMU-specific quirk</li>
-    </ul>
+        <div class="card">
+            <h3>Código Fonte</h3>
+            <pre><code>#include &lt;ncurses.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;time.h&gt;
+#include &lt;dirent.h&gt;
+#include &lt;unistd.h&gt;
 
-    <h2>🚀 Immediate Next Steps</h2>
-    <ol>
-        <li>Resolve QEMU/DRM freeze — explore alternative emulators or bypass QEMU for GUI development</li>
-        <li>Complete the GTK-based Journey UI shell (taskbar, wallpaper, launcher)</li>
-        <li>Port the system to a physical device (Raspberry Pi) to validate real hardware performance</li>
-    </ol>
+#define MAX_WINDOWS 20
+#define MAX_ICONS 50
+#define MAX_OUTPUT 2048
+#define INPUT_MAX 128
 
-    <h2>📡 Public Presence</h2>
-    <p>
-        This page serves as the official project log. <br>
-        <strong>GitHub Repository:</strong> <a href="https://github.com/prilugano992-cmyk/Journey-OS">github.com/prilugano992-cmyk/Journey-OS</a> <br>
-        <strong>Project Status Page:</strong> <a href="https://prilugano992-cmyk.github.io/Journey-OS/">prilugano992-cmyk.github.io/Journey-OS</a>
-    </p>
+typedef struct {
+    int y, x, w, h;
+    char title[64];
+    char content[MAX_OUTPUT];
+    int active;
+    int focused;
+} Window;
 
-    <hr>
+typedef struct {
+    char name[64];
+    int y, x;
+    int is_dir;
+} DesktopIcon;
+
+Window windows[MAX_WINDOWS];
+int window_count = 0;
+DesktopIcon icons[MAX_ICONS];
+int icon_count = 0;
+char input[INPUT_MAX] = "";
+int max_y, max_x;
+int desktop_mode = 0;
+int selected_icon = 0;
+
+enum { C_TASKBAR = 1, C_WIN_BODY, C_WIN_FOCUS, C_ERROR, C_DESKTOP_ICON, C_SELECTED_ICON };
+
+void init_ui() {
+    initscr();
+    cbreak();
+    noecho();
+    keypad(stdscr, TRUE);
+    curs_set(1);
+    start_color();
+    use_default_colors();
+    init_pair(C_TASKBAR, COLOR_WHITE, COLOR_BLUE);
+    init_pair(C_WIN_BODY, COLOR_WHITE, COLOR_CYAN);
+    init_pair(C_WIN_FOCUS, COLOR_YELLOW, COLOR_CYAN);
+    init_pair(C_ERROR, COLOR_RED, COLOR_CYAN);
+    init_pair(C_DESKTOP_ICON, COLOR_WHITE, COLOR_BLACK);
+    init_pair(C_SELECTED_ICON, COLOR_BLACK, COLOR_WHITE);
+    getmaxyx(stdscr, max_y, max_x);
+}
+
+void update_desktop() {
+    DIR *d = opendir(".");
+    if (!d) return;
+    icon_count = 0;
+    struct dirent *entry;
+    int row = 1, col = 2;
+    while ((entry = readdir(d)) != NULL && icon_count &lt; MAX_ICONS) {
+        if (entry-&gt;d_name[0] == '.') continue;
+        strncpy(icons[icon_count].name, entry-&gt;d_name, 63);
+        icons[icon_count].y = row;
+        icons[icon_count].x = col;
+        icons[icon_count].is_dir = (entry-&gt;d_type == DT_DIR) ? 1 : 0;
+        icon_count++;
+        row += 3;
+        if (row &gt; max_y - 5) { row = 1; col += 20; }
+    }
+    closedir(d);
+    if (selected_icon &gt;= icon_count) selected_icon = 0;
+}
+
+void redraw_desktop() {
+    bkgd(COLOR_BLACK);
+    erase();
+    for (int i = 0; i &lt; icon_count; i++) {
+        int pair = (desktop_mode && i == selected_icon) ? C_SELECTED_ICON : C_DESKTOP_ICON;
+        attron(COLOR_PAIR(pair));
+        if (icons[i].is_dir)
+            mvprintw(icons[i].y, icons[i].x, "[D] %-20s", icons[i].name);
+        else
+            mvprintw(icons[i].y, icons[i].x, "[ ] %-20s", icons[i].name);
+        mvprintw(icons[i].y + 1, icons[i].x, "------");
+        attroff(COLOR_PAIR(pair));
+    }
+}
+
+void draw_taskbar() {
+    attron(COLOR_PAIR(C_TASKBAR));
+    for (int x = 0; x &lt; max_x; x++) mvprintw(max_y - 1, x, " ");
+    mvprintw(max_y - 1, 1, " Bang Desktop ");
+    time_t now = time(NULL);
+    char tstr[10];
+    strftime(tstr, sizeof(tstr), "%H:%M", localtime(&amp;now));
+    mvprintw(max_y - 1, max_x - 8, " %s ", tstr);
+    if (desktop_mode) {
+        attron(COLOR_PAIR(C_ERROR));
+        mvprintw(max_y - 1, 20, "[MODO EDIÇÃO]");
+        attroff(COLOR_PAIR(C_ERROR));
+    }
+    attroff(COLOR_PAIR(C_TASKBAR));
+}
+
+void draw_text_in_window(Window *win, int color_pair) {
+    int max_text_width = win-&gt;w - 4;
+    int line = 0;
+    char *text = win-&gt;content;
+    int len = strlen(text);
+    int pos = 0;
+    while (pos &lt; len && line &lt; win-&gt;h - 3) {
+        int chunk_size = len - pos;
+        if (chunk_size &gt; max_text_width) chunk_size = max_text_width;
+        char chunk[512];
+        strncpy(chunk, text + pos, chunk_size);
+        chunk[chunk_size] = '\0';
+        char *newline = strchr(chunk, '\n');
+        if (newline) {
+            *newline = '\0';
+            chunk_size = newline - chunk;
+        }
+        attron(COLOR_PAIR(color_pair));
+        mvprintw(win-&gt;y + 2 + line, win-&gt;x + 2, "%-*s", max_text_width, chunk);
+        attroff(COLOR_PAIR(color_pair));
+        pos += chunk_size;
+        if (text[pos] == '\n') pos++;
+        line++;
+    }
+}
+
+void draw_windows() {
+    for (int i = 0; i &lt; window_count; i++) {
+        Window *w = &amp;windows[i];
+        if (!w-&gt;active) continue;
+        int pair = w-&gt;focused ? C_WIN_FOCUS : C_WIN_BODY;
+        attron(COLOR_PAIR(pair));
+        for (int row = 0; row &lt; w-&gt;h; row++)
+            for (int col = 0; col &lt; w-&gt;w; col++)
+                mvaddch(w-&gt;y + row, w-&gt;x + col, ' ');
+        attroff(COLOR_PAIR(pair));
+        attron(COLOR_PAIR(C_TASKBAR) | A_BOLD);
+        mvprintw(w-&gt;y, w-&gt;x, " %-*s ", w-&gt;w - 2, w-&gt;title);
+        attroff(COLOR_PAIR(C_TASKBAR) | A_BOLD);
+        draw_text_in_window(w, pair);
+        border(0, 0, 0, 0, 0, 0, 0, 0);
+    }
+}
+
+void draw_input() {
+    if (desktop_mode) {
+        attron(COLOR_PAIR(C_TASKBAR));
+        mvprintw(max_y - 2, 0, "[ENTER] Editar  [ESC] Sair  [SETAS] Navegar");
+        attroff(COLOR_PAIR(C_TASKBAR));
+    } else {
+        attron(COLOR_PAIR(C_TASKBAR));
+        mvprintw(max_y - 2, 0, "&gt; %s", input);
+        attroff(COLOR_PAIR(C_TASKBAR));
+    }
+}
+
+void add_window(const char *title, const char *content, int is_error) {
+    if (window_count &gt;= MAX_WINDOWS) return;
+    Window *w = &amp;windows[window_count++];
+    w-&gt;y = 3 + (window_count * 2) % 10;
+    w-&gt;x = 5 + (window_count * 3) % 20;
+    w-&gt;w = 50;
+    w-&gt;h = 8;
+    w-&gt;active = 1;
+    w-&gt;focused = 0;
+    strncpy(w-&gt;title, is_error ? "Erro" : "Output", 63);
+    strncat(w-&gt;title, ": ", 63);
+    strncat(w-&gt;title, title, 63);
+    strncpy(w-&gt;content, content, MAX_OUTPUT - 1);
+    if (window_count == 1) w-&gt;focused = 1;
+}
+
+void open_editor(const char *filename) {
+    int has_nano = (system("which nano &gt; /dev/null 2&gt;&amp;1") == 0);
+    int has_vi   = (system("which vi &gt; /dev/null 2&gt;&amp;1") == 0);
+    char cmd[512];
+    endwin();
+    if (has_nano) {
+        snprintf(cmd, sizeof(cmd), "nano %s", filename);
+        system(cmd);
+    } else if (has_vi) {
+        snprintf(cmd, sizeof(cmd), "vi %s", filename);
+        system(cmd);
+    } else {
+        refresh();
+        add_window("Editar", "Nenhum editor (nano/vi) encontrado.", 1);
+    }
+    refresh();
+    clear();
+}
+
+void execute_command(const char *cmd) {
+    if (strncmp(cmd, "editar ", 7) == 0) {
+        const char *filename = cmd + 7;
+        open_editor(filename);
+        update_desktop();
+        return;
+    }
+    char buffer[MAX_OUTPUT] = "";
+    FILE *fp = popen(cmd, "r");
+    if (!fp) {
+        add_window(cmd, "Falha ao executar comando.", 1);
+        return;
+    }
+    size_t len = 0;
+    while (fgets(buffer + len, sizeof(buffer) - len, fp)) {
+        len = strlen(buffer);
+        if (len &gt;= MAX_OUTPUT - 10) break;
+    }
+    int status = pclose(fp);
+    if (status == 0 && strlen(buffer) == 0)
+        strcpy(buffer, "Comando executado com sucesso.");
+    add_window(cmd, buffer, status != 0);
+    update_desktop();
+}
+
+void focus_next() {
+    if (window_count == 0) return;
+    int cur = -1;
+    for (int i = 0; i &lt; window_count; i++) if (windows[i].focused) cur = i;
+    if (cur != -1) windows[cur].focused = 0;
+    for (int i = 1; i &lt;= window_count; i++) {
+        int idx = (cur + i) % window_count;
+        if (windows[idx].active) { windows[idx].focused = 1; return; }
+    }
+    windows[0].focused = 1;
+}
+
+void close_focused() {
+    for (int i = 0; i &lt; window_count; i++) {
+        if (windows[i].focused) { windows[i].active = 0; windows[i].focused = 0; break; }
+    }
+    focus_next();
+}
+
+void move_focused(int dy, int dx) {
+    for (int i = 0; i &lt; window_count; i++) {
+        if (windows[i].focused && windows[i].active) {
+            int ny = windows[i].y + dy;
+            int nx = windows[i].x + dx;
+            if (ny &gt;= 1 && ny + windows[i].h &lt; max_y - 2) windows[i].y = ny;
+            if (nx &gt;= 1 && nx + windows[i].w &lt; max_x - 2) windows[i].x = nx;
+            return;
+        }
+    }
+}
+
+int main() {
+    init_ui();
+    update_desktop();
+
+    while (1) {
+        redraw_desktop();
+        draw_windows();
+        draw_taskbar();
+        draw_input();
+        refresh();
+
+        int ch = getch();
+
+        if (desktop_mode) {
+            switch (ch) {
+                case KEY_UP:    if (selected_icon &gt; 0) selected_icon--; break;
+                case KEY_DOWN:  if (selected_icon &lt; icon_count - 1) selected_icon++; break;
+                case KEY_LEFT:  if (selected_icon &gt; 0) selected_icon--; break;
+                case KEY_RIGHT: if (selected_icon &lt; icon_count - 1) selected_icon++; break;
+                case '\n':
+                    if (!icons[selected_icon].is_dir) {
+                        open_editor(icons[selected_icon].name);
+                        update_desktop();
+                    }
+                    break;
+                case 27:
+                case 'q':
+                case 'Q':
+                    desktop_mode = 0;
+                    break;
+            }
+            continue;
+        }
+
+        if (ch == '#') {
+            desktop_mode = 1;
+            selected_icon = 0;
+            continue;
+        } else if (ch == '\n') {
+            if (strcmp(input, "exit") == 0) break;
+            if (strcmp(input, "clear") == 0) {
+                window_count = 0;
+                update_desktop();
+            } else if (strlen(input) &gt; 0) execute_command(input);
+            input[0] = '\0';
+        } else if (ch == 127 || ch == KEY_BACKSPACE) {
+            int len = strlen(input);
+            if (len &gt; 0) input[len - 1] = '\0';
+        } else if (ch == '\t') focus_next();
+        else if (ch == KEY_DC) close_focused();
+        else if (ch == KEY_UP) move_focused(-1, 0);
+        else if (ch == KEY_DOWN) move_focused(1, 0);
+        else if (ch == KEY_LEFT) move_focused(0, -1);
+        else if (ch == KEY_RIGHT) move_focused(0, 1);
+        else if (ch &gt;= 32 && ch &lt; 127 && strlen(input) &lt; 127) {
+            int len = strlen(input);
+            input[len] = (char)ch;
+            input[len + 1] = '\0';
+        }
+    }
+
+    endwin();
+    return 0;
+}
+</code></pre>
+            <p class="license">Licença MIT — Copyright (c) 2026 Lucas Prado Coelho</p>
+        </div>
+    </div>
 
     <div class="footer">
-        © 2026 Lucas Prado Coelho · Journey OS<br>
-        Built with Linux and the GNU toolchain. No AI-generated code in the OS core.
+        © 2026 Lucas Prado Coelho · Construído com Linux, GNU toolchain e cafeína.
     </div>
-
 </div>
+
+<script>
+    function openProject(name) {
+        document.querySelectorAll('.project-panel').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.getElementById(name).classList.add('active');
+        event.target.classList.add('active');
+    }
+</script>
 </body>
 </html>
