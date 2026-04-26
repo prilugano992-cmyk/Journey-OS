@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lucas Prado Coelho · Projetos</title>
+    <title>Lucas Prado Coelho · Projects</title>
     <style>
         :root {
             --bg: #0d1117;
@@ -107,10 +107,10 @@
 
     <header>
         <h1>Lucas Prado Coelho</h1>
-        <p>Construindo sistemas operacionais e interfaces alternativas.</p>
+        <p>Building operating systems and alternative interfaces.</p>
         <div class="links">
             <a href="https://github.com/prilugano992-cmyk">GitHub</a>
-            <a href="https://prilugano992-cmyk.github.io/Journey-OS/">Journey OS</a>
+            <a href="#journey">Journey OS</a>
             <a href="#bang">Bang Desktop</a>
         </div>
     </header>
@@ -135,8 +135,8 @@
         </div>
         <div class="card">
             <h3>Status</h3>
-            <p>O kernel compila e inicia no QEMU; a interface gráfica ainda está sendo integrada devido a limitações do QEMU com compositores Wayland. O desenvolvimento do Bang Desktop serve como laboratório para a futura UI do Journey OS.</p>
-            <p style="margin-top:1rem;">🔗 <a href="https://prilugano992-cmyk.github.io/Journey-OS/">Página de status do Journey OS</a></p>
+            <p>The kernel compiles and boots under QEMU; the graphical interface is still being integrated due to QEMU limitations with Wayland compositors. Bang Desktop development serves as a laboratory for the future Journey OS UI.</p>
+            <p style="margin-top:1rem;">🔗 <a href="https://prilugano992-cmyk.github.io/Journey-OS/">Journey OS status page</a></p>
         </div>
     </div>
 
@@ -144,12 +144,12 @@
     <div id="bang" class="project-panel">
         <div class="card">
             <h2>Bang Desktop <span class="badge" style="background:#9c6ade;">OPEN SOURCE</span></h2>
-            <p>Um ambiente visual de terminal escrito em C com ncurses. Combina janelas móveis, área de trabalho com ícones e edição de arquivos via <code>vi</code>/<code>nano</code>. É a prova de conceito da interface híbrida (terminal + GUI) idealizada para o Journey OS.</p>
-            <p style="margin-top:0.5rem; color:#8b949e;">Licença MIT · Totalmente open source para estudo, modificação e distribuição.</p>
+            <p>A terminal-based visual environment written in C with ncurses. It combines movable windows, a desktop with icons, and file editing via <code>vi</code>/<code>nano</code>. It is the proof of concept for the hybrid interface (terminal + GUI) envisioned for Journey OS.</p>
+            <p style="margin-top:0.5rem; color:#8b949e;">MIT License · Fully open source for study, modification, and distribution.</p>
         </div>
 
         <div class="card">
-            <h3>Código Fonte</h3>
+            <h3>Source Code</h3>
             <pre><code>#include &lt;ncurses.h&gt;
 #include &lt;stdlib.h&gt;
 #include &lt;string.h&gt;
@@ -249,7 +249,7 @@ void draw_taskbar() {
     mvprintw(max_y - 1, max_x - 8, " %s ", tstr);
     if (desktop_mode) {
         attron(COLOR_PAIR(C_ERROR));
-        mvprintw(max_y - 1, 20, "[MODO EDIÇÃO]");
+        mvprintw(max_y - 1, 20, "[EDIT MODE]");
         attroff(COLOR_PAIR(C_ERROR));
     }
     attroff(COLOR_PAIR(C_TASKBAR));
@@ -302,7 +302,7 @@ void draw_windows() {
 void draw_input() {
     if (desktop_mode) {
         attron(COLOR_PAIR(C_TASKBAR));
-        mvprintw(max_y - 2, 0, "[ENTER] Editar  [ESC] Sair  [SETAS] Navegar");
+        mvprintw(max_y - 2, 0, "[ENTER] Edit  [ESC] Exit  [ARROWS] Navigate");
         attroff(COLOR_PAIR(C_TASKBAR));
     } else {
         attron(COLOR_PAIR(C_TASKBAR));
@@ -320,7 +320,7 @@ void add_window(const char *title, const char *content, int is_error) {
     w-&gt;h = 8;
     w-&gt;active = 1;
     w-&gt;focused = 0;
-    strncpy(w-&gt;title, is_error ? "Erro" : "Output", 63);
+    strncpy(w-&gt;title, is_error ? "Error" : "Output", 63);
     strncat(w-&gt;title, ": ", 63);
     strncat(w-&gt;title, title, 63);
     strncpy(w-&gt;content, content, MAX_OUTPUT - 1);
@@ -340,15 +340,15 @@ void open_editor(const char *filename) {
         system(cmd);
     } else {
         refresh();
-        add_window("Editar", "Nenhum editor (nano/vi) encontrado.", 1);
+        add_window("Edit", "No editor (nano/vi) found.", 1);
     }
     refresh();
     clear();
 }
 
 void execute_command(const char *cmd) {
-    if (strncmp(cmd, "editar ", 7) == 0) {
-        const char *filename = cmd + 7;
+    if (strncmp(cmd, "edit ", 5) == 0) {
+        const char *filename = cmd + 5;
         open_editor(filename);
         update_desktop();
         return;
@@ -356,7 +356,7 @@ void execute_command(const char *cmd) {
     char buffer[MAX_OUTPUT] = "";
     FILE *fp = popen(cmd, "r");
     if (!fp) {
-        add_window(cmd, "Falha ao executar comando.", 1);
+        add_window(cmd, "Failed to execute command.", 1);
         return;
     }
     size_t len = 0;
@@ -366,7 +366,7 @@ void execute_command(const char *cmd) {
     }
     int status = pclose(fp);
     if (status == 0 && strlen(buffer) == 0)
-        strcpy(buffer, "Comando executado com sucesso.");
+        strcpy(buffer, "Command executed successfully.");
     add_window(cmd, buffer, status != 0);
     update_desktop();
 }
@@ -467,12 +467,12 @@ int main() {
     return 0;
 }
 </code></pre>
-            <p class="license">Licença MIT — Copyright (c) 2026 Lucas Prado Coelho</p>
+            <p class="license">MIT License — Copyright (c) 2026 Lucas Prado Coelho</p>
         </div>
     </div>
 
     <div class="footer">
-        © 2026 Lucas Prado Coelho · Construído com Linux, GNU toolchain e cafeína.
+        © 2026 Lucas Prado Coelho · Built with Linux, GNU toolchain and caffeine.
     </div>
 </div>
 
